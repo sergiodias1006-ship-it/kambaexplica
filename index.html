@@ -1,0 +1,1821 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KAMBAEXPLICA — Liderando a Educação em Angola</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    /* ===================== CSS VARIABLES ===================== */
+    :root {
+      --primary: #0A3D6B;
+      --primary-light: #1565A8;
+      --accent: #FF6B00;
+      --accent-light: #FF8C3A;
+      --gold: #F5C842;
+      --bg: #F7F9FC;
+      --surface: #FFFFFF;
+      --surface2: #EEF3F9;
+      --text: #0D1B2A;
+      --text-muted: #5A7083;
+      --border: #D5E0EC;
+      --success: #1DAA6C;
+      --danger: #E03B3B;
+      --shadow-sm: 0 2px 8px rgba(10,61,107,0.07);
+      --shadow-md: 0 6px 24px rgba(10,61,107,0.12);
+      --shadow-lg: 0 16px 48px rgba(10,61,107,0.18);
+      --radius: 14px;
+      --radius-sm: 8px;
+      --radius-lg: 24px;
+      --nav-h: 68px;
+      --font-head: 'Sora', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --transition: 0.22s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ===================== RESET ===================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+    ul { list-style: none; }
+    input, select, textarea { font-family: inherit; }
+
+    /* ===================== UTILITIES ===================== */
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 26px; border-radius: 50px; font-weight: 600;
+      font-size: 0.95rem; transition: var(--transition);
+      cursor: pointer; white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--accent); color: #fff;
+      box-shadow: 0 4px 14px rgba(255,107,0,0.3);
+    }
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(255,107,0,0.38);
+    }
+    .btn-outline {
+      background: transparent; color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+    .btn-outline:hover {
+      background: var(--primary); color: #fff;
+      transform: translateY(-2px);
+    }
+    .btn-white {
+      background: #fff; color: var(--primary);
+      box-shadow: var(--shadow-md);
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.12); color: #fff;
+      border: 2px solid rgba(255,255,255,0.35);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.22); }
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 12px; border-radius: 50px; font-size: 0.78rem;
+      font-weight: 600; letter-spacing: 0.03em;
+    }
+    .badge-primary { background: #EAF0F9; color: var(--primary); }
+    .badge-accent { background: #FFF0E6; color: var(--accent); }
+    .badge-success { background: #E3F8EF; color: var(--success); }
+    .tag {
+      padding: 6px 14px; border-radius: 50px; font-size: 0.82rem;
+      font-weight: 500; border: 1.5px solid var(--border);
+      background: var(--surface); color: var(--text-muted);
+      cursor: pointer; transition: var(--transition);
+    }
+    .tag:hover, .tag.active {
+      background: var(--primary); color: #fff; border-color: var(--primary);
+    }
+    .section-label {
+      font-family: var(--font-head); font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px; display: block;
+    }
+    .section-title {
+      font-family: var(--font-head); font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 800; color: var(--text); line-height: 1.2;
+    }
+    .section-subtitle {
+      font-size: 1.05rem; color: var(--text-muted); margin-top: 12px;
+      max-width: 540px; line-height: 1.7;
+    }
+    .divider {
+      width: 48px; height: 4px; border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--gold));
+      margin: 16px 0;
+    }
+    .star { color: var(--gold); font-size: 0.9rem; }
+    .flag-ao { font-size: 1.1rem; }
+
+    /* ===================== NAVBAR ===================== */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--nav-h);
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow var(--transition);
+    }
+    #navbar.scrolled { box-shadow: var(--shadow-md); }
+    .nav-inner {
+      height: 100%; display: flex; align-items: center;
+      justify-content: space-between; gap: 24px;
+    }
+    .nav-logo {
+      font-family: var(--font-head); font-weight: 800; font-size: 1.25rem;
+      color: var(--primary); display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-logo-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 1rem;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-links a {
+      padding: 8px 16px; border-radius: 8px; font-size: 0.9rem;
+      font-weight: 500; color: var(--text-muted); transition: var(--transition);
+    }
+    .nav-links a:hover { color: var(--primary); background: var(--surface2); }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .nav-login-btn {
+      padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 0.9rem;
+      color: var(--primary); border: 2px solid var(--border); transition: var(--transition);
+    }
+    .nav-login-btn:hover { border-color: var(--primary); background: var(--surface2); }
+    .nav-wa-btn {
+      display: flex; align-items: center; gap: 7px;
+      padding: 8px 18px; border-radius: 8px; font-weight: 600; font-size: 0.88rem;
+      background: #25D366; color: #fff; transition: var(--transition);
+    }
+    .nav-wa-btn:hover { background: #20ba5a; transform: translateY(-1px); }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      padding: 8px; cursor: pointer; border-radius: 8px;
+    }
+    .hamburger span {
+      width: 22px; height: 2px; background: var(--primary);
+      border-radius: 2px; transition: var(--transition);
+    }
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(255,255,255,0.98); padding: 100px 24px 40px;
+      flex-direction: column; gap: 8px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      padding: 14px 18px; border-radius: 12px; font-size: 1.05rem;
+      font-weight: 600; color: var(--text);
+    }
+    .mobile-menu a:hover { background: var(--surface2); }
+
+    /* ===================== HERO ===================== */
+    #hero {
+      min-height: 100vh;
+      padding: calc(var(--nav-h) + 60px) 0 80px;
+      background: linear-gradient(135deg, #041E36 0%, #0A3D6B 55%, #1B6CB5 100%);
+      position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 60% at 75% 50%, rgba(255,107,0,0.12), transparent),
+                  radial-gradient(ellipse 40% 50% at 20% 80%, rgba(21,101,168,0.3), transparent);
+    }
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center; position: relative; z-index: 1;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      color: #fff; padding: 6px 16px; border-radius: 50px;
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; margin-bottom: 24px;
+    }
+    .hero-title {
+      font-family: var(--font-head); font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 800; color: #fff; line-height: 1.15; margin-bottom: 20px;
+    }
+    .hero-title .accent { color: var(--gold); }
+    .hero-desc {
+      color: rgba(255,255,255,0.75); font-size: 1.1rem;
+      line-height: 1.75; margin-bottom: 36px; max-width: 480px;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px; }
+    .hero-stats {
+      display: flex; gap: 32px; border-top: 1px solid rgba(255,255,255,0.15);
+      padding-top: 28px;
+    }
+    .hero-stat-num {
+      font-family: var(--font-head); font-size: 1.6rem; font-weight: 800; color: #fff;
+    }
+    .hero-stat-label { font-size: 0.82rem; color: rgba(255,255,255,0.6); margin-top: 2px; }
+    .hero-images {
+      display: grid; grid-template-columns: 1fr 1fr;
+      grid-template-rows: 220px 160px;
+      gap: 14px; position: relative;
+    }
+    .hero-img-card {
+      border-radius: var(--radius-lg); overflow: hidden;
+      position: relative; box-shadow: var(--shadow-lg);
+    }
+    .hero-img-card:first-child { grid-column: 1; grid-row: 1 / 3; }
+    .hero-img-card img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-img-card::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(4,30,54,0.5));
+    }
+    .payment-float {
+      position: absolute; bottom: -20px; left: -28px; z-index: 10;
+      background: var(--surface); border-radius: 14px;
+      padding: 14px 18px; box-shadow: var(--shadow-lg);
+      min-width: 220px; animation: float 3s ease-in-out infinite;
+    }
+    .payment-float-label { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 4px; }
+    .payment-float-amount {
+      font-family: var(--font-head); font-size: 1.4rem; font-weight: 800; color: var(--primary);
+    }
+    .payment-float-desc { font-size: 0.78rem; color: var(--success); margin-top: 4px; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* ===================== SEARCH SECTION ===================== */
+    #busca {
+      background: var(--surface); padding: 64px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .search-box {
+      background: var(--bg); border: 2px solid var(--border);
+      border-radius: var(--radius-lg); padding: 32px;
+      box-shadow: var(--shadow-sm);
+    }
+    .search-box-title {
+      font-family: var(--font-head); font-size: 1.2rem; font-weight: 700;
+      color: var(--text); margin-bottom: 20px;
+    }
+    .search-row {
+      display: grid; grid-template-columns: 1fr 1fr 1fr auto;
+      gap: 14px; align-items: end;
+    }
+    .search-field label {
+      display: block; font-size: 0.82rem; font-weight: 600;
+      color: var(--text-muted); margin-bottom: 7px;
+    }
+    .search-field select, .search-field input {
+      width: 100%; padding: 13px 16px; border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border); background: var(--surface);
+      font-size: 0.92rem; color: var(--text); appearance: none;
+      transition: var(--transition);
+    }
+    .search-field select:focus, .search-field input:focus {
+      outline: none; border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(21,101,168,0.1);
+    }
+    .search-btn {
+      padding: 13px 28px; border-radius: var(--radius-sm);
+      background: var(--primary); color: #fff; font-weight: 700;
+      font-size: 0.95rem; transition: var(--transition);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .search-btn:hover { background: var(--primary-light); transform: translateY(-2px); }
+
+    /* Discipline Tags */
+    .disc-section { padding: 60px 0; }
+    .disc-section-header { text-align: center; margin-bottom: 36px; }
+    .disc-grid {
+      display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+    }
+
+    /* ===================== TUTORS ===================== */
+    #explicadores { padding: 80px 0; background: var(--bg); }
+    .section-header { margin-bottom: 48px; }
+    .section-header.center { text-align: center; }
+    .section-header.center .section-subtitle { margin: 12px auto 0; }
+    .filter-tabs {
+      display: flex; gap: 10px; margin-bottom: 36px;
+      border-bottom: 2px solid var(--border); padding-bottom: 0;
+    }
+    .filter-tab {
+      padding: 10px 22px; border-radius: 8px 8px 0 0; font-weight: 600;
+      font-size: 0.88rem; color: var(--text-muted); cursor: pointer;
+      transition: var(--transition); border: none; background: none;
+      border-bottom: 3px solid transparent; margin-bottom: -2px;
+    }
+    .filter-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+    .tutors-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 24px;
+    }
+    .tutor-card {
+      background: var(--surface); border-radius: var(--radius-lg);
+      border: 1px solid var(--border); overflow: hidden;
+      transition: var(--transition); cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+    .tutor-card:hover {
+      transform: translateY(-6px); box-shadow: var(--shadow-md);
+      border-color: rgba(21,101,168,0.3);
+    }
+    .tutor-card-img {
+      height: 200px; position: relative; overflow: hidden;
+      background: linear-gradient(135deg, var(--surface2), var(--border));
+    }
+    .tutor-card-img img { width: 100%; height: 100%; object-fit: cover; }
+    .tutor-card-mode {
+      position: absolute; top: 12px; right: 12px;
+      background: rgba(255,255,255,0.92); border-radius: 20px;
+      padding: 4px 10px; font-size: 0.75rem; font-weight: 600;
+      color: var(--primary); backdrop-filter: blur(4px);
+    }
+    .tutor-card-body { padding: 20px; }
+    .tutor-card-name {
+      font-family: var(--font-head); font-size: 1.05rem; font-weight: 700;
+      color: var(--text); margin-bottom: 4px;
+    }
+    .tutor-card-subject {
+      font-size: 0.85rem; color: var(--accent); font-weight: 600; margin-bottom: 10px;
+    }
+    .tutor-card-info {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .tutor-rating { display: flex; align-items: center; gap: 5px; font-size: 0.85rem; font-weight: 600; }
+    .tutor-price {
+      font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: var(--primary);
+    }
+    .tutor-price span { font-size: 0.75rem; font-weight: 400; color: var(--text-muted); }
+    .tutor-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .tutor-tag {
+      padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600;
+      background: var(--surface2); color: var(--text-muted);
+    }
+    .tutor-card-footer {
+      display: flex; gap: 10px; border-top: 1px solid var(--border); padding-top: 16px;
+    }
+    .tutor-card-footer .btn { flex: 1; justify-content: center; font-size: 0.85rem; padding: 10px 16px; }
+    .tutor-avatar {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head); font-size: 3rem; font-weight: 800;
+      color: var(--surface);
+    }
+
+    /* ===================== HOW IT WORKS ===================== */
+    #como-funciona {
+      padding: 90px 0;
+      background: linear-gradient(135deg, var(--primary) 0%, #0C4F8A 100%);
+      position: relative; overflow: hidden;
+    }
+    #como-funciona::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 50% 80% at 80% 20%, rgba(255,107,0,0.08), transparent);
+    }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 28px; position: relative; z-index: 1;
+    }
+    .step-card {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-lg); padding: 32px 24px;
+      backdrop-filter: blur(10px); transition: var(--transition);
+    }
+    .step-card:hover { background: rgba(255,255,255,0.12); transform: translateY(-4px); }
+    .step-num {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--accent); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head); font-weight: 800; font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+    .step-title {
+      font-family: var(--font-head); font-size: 1.1rem; font-weight: 700;
+      color: #fff; margin-bottom: 10px;
+    }
+    .step-desc { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.65; }
+    .payment-info-box {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius-lg); padding: 32px; margin-top: 48px;
+      position: relative; z-index: 1;
+      display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+    }
+    .payment-icon {
+      width: 64px; height: 64px; border-radius: 18px;
+      background: var(--success); display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; flex-shrink: 0;
+    }
+    .payment-info-title {
+      font-family: var(--font-head); font-size: 1.15rem; font-weight: 700;
+      color: #fff; margin-bottom: 8px;
+    }
+    .payment-info-desc { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
+    .commission-bars {
+      display: flex; gap: 24px; margin-left: auto; flex-shrink: 0;
+    }
+    .comm-bar { text-align: center; }
+    .comm-pct {
+      font-family: var(--font-head); font-size: 2rem; font-weight: 800; color: #fff;
+    }
+    .comm-label { font-size: 0.78rem; color: rgba(255,255,255,0.6); margin-top: 2px; }
+    .comm-bar.green .comm-pct { color: #4FFFB0; }
+
+    /* ===================== CTA ===================== */
+    #cta {
+      padding: 90px 0;
+      background: var(--bg);
+      text-align: center;
+    }
+    .cta-box {
+      background: linear-gradient(135deg, #041E36, #0A3D6B);
+      border-radius: var(--radius-lg) * 2; border-radius: 28px;
+      padding: 70px 48px; position: relative; overflow: hidden;
+    }
+    .cta-box::after {
+      content: ''; position: absolute;
+      width: 400px; height: 400px; border-radius: 50%;
+      background: rgba(255,107,0,0.1); top: -100px; right: -100px; pointer-events: none;
+    }
+    .cta-title {
+      font-family: var(--font-head); font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800; color: #fff; margin-bottom: 16px; line-height: 1.2;
+    }
+    .cta-desc { font-size: 1rem; color: rgba(255,255,255,0.7); margin-bottom: 36px; }
+    .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    /* ===================== CONTACT ===================== */
+    #contacto { padding: 80px 0; background: var(--surface); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 16px; margin-bottom: 28px;
+    }
+    .contact-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .contact-icon.blue { background: #EAF0F9; }
+    .contact-icon.green { background: #E3F8EF; }
+    .contact-icon.orange { background: #FFF0E6; }
+    .contact-item-title { font-weight: 700; color: var(--text); font-size: 0.95rem; }
+    .contact-item-val { font-size: 0.9rem; color: var(--text-muted); margin-top: 3px; }
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .form-group label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
+    .form-group input, .form-group textarea, .form-group select {
+      padding: 13px 16px; border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border); background: var(--bg);
+      font-size: 0.92rem; color: var(--text); transition: var(--transition);
+      resize: vertical;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      outline: none; border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(21,101,168,0.1);
+    }
+
+    /* ===================== FOOTER ===================== */
+    footer {
+      background: #041E36; color: rgba(255,255,255,0.75);
+      padding: 60px 0 28px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px; margin-bottom: 48px;
+    }
+    .footer-logo {
+      font-family: var(--font-head); font-size: 1.4rem; font-weight: 800;
+      color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-desc { font-size: 0.88rem; line-height: 1.7; margin-bottom: 20px; }
+    .footer-col-title {
+      font-family: var(--font-head); font-weight: 700; color: #fff;
+      font-size: 0.95rem; margin-bottom: 18px;
+    }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      font-size: 0.88rem; color: rgba(255,255,255,0.65); transition: var(--transition);
+    }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.82rem; color: rgba(255,255,255,0.4); flex-wrap: wrap; gap: 12px;
+    }
+
+    /* ===================== MODALS ===================== */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(4,30,54,0.65);
+      z-index: 2000; display: flex; align-items: center; justify-content: center;
+      padding: 20px; backdrop-filter: blur(6px); opacity: 0; pointer-events: none;
+      transition: opacity var(--transition);
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--surface); border-radius: var(--radius-lg);
+      width: 100%; max-width: 520px; max-height: 92vh; overflow-y: auto;
+      box-shadow: var(--shadow-lg); transform: translateY(24px);
+      transition: transform var(--transition); position: relative;
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal-header {
+      padding: 28px 28px 20px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .modal-title {
+      font-family: var(--font-head); font-size: 1.2rem; font-weight: 700; color: var(--text);
+    }
+    .modal-close {
+      width: 36px; height: 36px; border-radius: 8px; background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: var(--text-muted); cursor: pointer;
+      border: 1px solid var(--border); transition: var(--transition);
+    }
+    .modal-close:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
+    .modal-body { padding: 28px; }
+    .modal-footer { padding: 20px 28px 28px; }
+    .auth-tabs {
+      display: flex; gap: 2px; background: var(--bg); border-radius: 10px;
+      padding: 4px; margin-bottom: 24px;
+    }
+    .auth-tab {
+      flex: 1; padding: 10px; border-radius: 8px; font-weight: 600;
+      font-size: 0.88rem; color: var(--text-muted); text-align: center;
+      cursor: pointer; transition: var(--transition);
+    }
+    .auth-tab.active { background: var(--surface); color: var(--primary); box-shadow: var(--shadow-sm); }
+    .form-divider {
+      display: flex; align-items: center; gap: 12px; margin: 16px 0;
+      color: var(--text-muted); font-size: 0.82rem;
+    }
+    .form-divider::before, .form-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    .social-btn {
+      width: 100%; padding: 12px; border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border); background: var(--surface);
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: var(--transition);
+    }
+    .social-btn:hover { background: var(--bg); }
+    .modal-link { color: var(--primary-light); font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+    .modal-link:hover { text-decoration: underline; }
+
+    /* Tutor Profile Modal */
+    .profile-hero {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      padding: 32px 28px; display: flex; gap: 20px; align-items: flex-start;
+    }
+    .profile-avatar {
+      width: 84px; height: 84px; border-radius: 20px;
+      border: 3px solid rgba(255,255,255,0.3); overflow: hidden;
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; font-weight: 800; color: #fff; font-family: var(--font-head);
+    }
+    .profile-name {
+      font-family: var(--font-head); font-size: 1.4rem; font-weight: 800; color: #fff;
+    }
+    .profile-subject { color: var(--gold); font-weight: 600; margin: 4px 0; }
+    .profile-stats-row { display: flex; gap: 20px; margin-top: 12px; flex-wrap: wrap; }
+    .profile-stat { text-align: center; }
+    .profile-stat-num { font-family: var(--font-head); font-weight: 800; color: #fff; font-size: 1.1rem; }
+    .profile-stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.65); }
+    .profile-section { padding: 20px 28px; border-bottom: 1px solid var(--border); }
+    .profile-section-title {
+      font-family: var(--font-head); font-weight: 700; font-size: 0.9rem;
+      color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+    .price-option {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 16px; border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border); margin-bottom: 10px; cursor: pointer;
+      transition: var(--transition);
+    }
+    .price-option:hover, .price-option.selected {
+      border-color: var(--primary); background: #EAF0F9;
+    }
+    .price-option-name { font-weight: 600; font-size: 0.92rem; }
+    .price-option-val { font-family: var(--font-head); font-weight: 700; color: var(--primary); }
+    .review-item { margin-bottom: 16px; }
+    .review-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+    .review-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--surface2); display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.85rem; color: var(--primary);
+    }
+    .review-name { font-weight: 600; font-size: 0.88rem; }
+    .review-date { font-size: 0.75rem; color: var(--text-muted); }
+    .review-text { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ===================== CHAT ===================== */
+    #chat-fab {
+      position: fixed; bottom: 28px; right: 28px; z-index: 1100;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: var(--primary); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-lg); cursor: pointer;
+      font-size: 1.4rem; transition: var(--transition);
+    }
+    #chat-fab:hover { background: var(--primary-light); transform: scale(1.08); }
+    #chat-fab .badge-count {
+      position: absolute; top: -4px; right: -4px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid var(--bg);
+    }
+    #chat-panel {
+      position: fixed; bottom: 100px; right: 28px; z-index: 1100;
+      width: 380px; height: 560px;
+      background: var(--surface); border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg); border: 1px solid var(--border);
+      display: none; flex-direction: column; overflow: hidden;
+    }
+    #chat-panel.open { display: flex; }
+    .chat-header {
+      background: var(--primary); padding: 16px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .chat-title { font-family: var(--font-head); font-weight: 700; color: #fff; font-size: 0.95rem; }
+    .chat-close {
+      width: 30px; height: 30px; border-radius: 8px; background: rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; cursor: pointer; font-size: 1rem;
+    }
+    .chat-tabs {
+      display: flex; border-bottom: 1px solid var(--border);
+    }
+    .chat-tab {
+      flex: 1; padding: 11px; text-align: center; font-weight: 600; font-size: 0.82rem;
+      color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent;
+      margin-bottom: -1px; transition: var(--transition);
+    }
+    .chat-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+    .chat-conversations {
+      flex: 1; overflow-y: auto; padding: 8px;
+    }
+    .chat-conv-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px; border-radius: var(--radius-sm); cursor: pointer;
+      transition: var(--transition);
+    }
+    .chat-conv-item:hover { background: var(--bg); }
+    .chat-conv-item.active { background: #EAF0F9; }
+    .chat-conv-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--surface2); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; color: var(--primary); font-size: 1rem;
+    }
+    .chat-conv-name { font-weight: 600; font-size: 0.88rem; color: var(--text); }
+    .chat-conv-preview { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+    .chat-messages {
+      flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px;
+    }
+    .msg { max-width: 78%; }
+    .msg.me { align-self: flex-end; }
+    .msg-bubble {
+      padding: 10px 14px; border-radius: 14px; font-size: 0.88rem; line-height: 1.5;
+    }
+    .msg.other .msg-bubble { background: var(--bg); color: var(--text); border-radius: 4px 14px 14px 14px; }
+    .msg.me .msg-bubble { background: var(--primary); color: #fff; border-radius: 14px 4px 14px 14px; }
+    .msg-time { font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; padding: 0 4px; }
+    .msg.me .msg-time { text-align: right; }
+    .chat-input-area {
+      padding: 12px 14px; border-top: 1px solid var(--border);
+      display: flex; align-items: flex-end; gap: 10px;
+    }
+    .chat-input-area textarea {
+      flex: 1; padding: 10px 14px; border-radius: 22px;
+      border: 1.5px solid var(--border); resize: none; font-size: 0.88rem;
+      max-height: 100px; line-height: 1.5;
+    }
+    .chat-input-area textarea:focus { outline: none; border-color: var(--primary-light); }
+    .chat-send-btn {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--primary); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; flex-shrink: 0; transition: var(--transition);
+    }
+    .chat-send-btn:hover { background: var(--primary-light); }
+    .chat-locked {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 32px;
+    }
+    .chat-locked-icon { font-size: 2.8rem; margin-bottom: 14px; }
+    .chat-locked-title { font-family: var(--font-head); font-weight: 700; margin-bottom: 8px; color: var(--text); }
+    .chat-locked-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.65; }
+
+    /* ===================== TOAST ===================== */
+    #toast-container {
+      position: fixed; top: 80px; right: 24px; z-index: 3000;
+      display: flex; flex-direction: column; gap: 10px; pointer-events: none;
+    }
+    .toast {
+      background: var(--surface); border-radius: var(--radius-sm);
+      padding: 14px 18px; box-shadow: var(--shadow-lg);
+      border-left: 4px solid var(--success);
+      display: flex; align-items: center; gap: 12px;
+      font-size: 0.88rem; font-weight: 500; max-width: 320px;
+      animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+      pointer-events: all;
+    }
+    .toast.error { border-left-color: var(--danger); }
+    .toast.info { border-left-color: var(--primary); }
+    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    @keyframes fadeOut { to { opacity: 0; transform: translateX(100%); } }
+
+    /* ===================== DASHBOARD ===================== */
+    #dashboard-modal .modal { max-width: 860px; }
+    .dash-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 24px; }
+    .dash-stat-card {
+      background: var(--bg); border-radius: var(--radius-sm); padding: 20px;
+      border: 1px solid var(--border);
+    }
+    .dash-stat-label { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; }
+    .dash-stat-val { font-family: var(--font-head); font-size: 1.8rem; font-weight: 800; color: var(--text); margin: 6px 0 2px; }
+    .dash-stat-sub { font-size: 0.78rem; color: var(--success); font-weight: 600; }
+
+    /* ===================== RESPONSIVE ===================== */
+    @media (max-width: 1024px) {
+      .steps-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-actions { display: none; }
+      .hamburger { display: flex; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-images { display: none; }
+      .search-row { grid-template-columns: 1fr; }
+      .tutors-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .commission-bars { margin-left: 0; }
+      .payment-info-box { flex-direction: column; gap: 20px; }
+      #chat-panel { width: calc(100vw - 32px); right: 16px; }
+    }
+
+    /* ===================== SCROLL ANIMATIONS ===================== */
+    .reveal {
+      opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- ===================== NAVBAR ===================== -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a class="nav-logo" href="#">
+      <div class="nav-logo-icon">U</div>
+      UNITEACH<span>Academy</span>
+    </a>
+    <div class="nav-links">
+      <a href="#">Início</a>
+      <a href="#explicadores">Explicadores</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-login-btn" onclick="openModal('login-modal')">Entrar</button>
+      <a class="nav-wa-btn btn" href="https://wa.me/244939844546" target="_blank">
+        <span>💬</span> WhatsApp
+      </a>
+    </div>
+    <div class="hamburger" onclick="toggleMobile()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#" onclick="toggleMobile()">Início</a>
+  <a href="#explicadores" onclick="toggleMobile()">Explicadores</a>
+  <a href="#como-funciona" onclick="toggleMobile()">Como funciona</a>
+  <a href="#contacto" onclick="toggleMobile()">Contacto</a>
+  <button class="btn btn-primary" style="margin-top:12px" onclick="openModal('login-modal');toggleMobile()">Entrar</button>
+</div>
+
+<!-- ===================== HERO ===================== -->
+<section id="hero">
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <div class="hero-tag">🇦🇴 SÓ UM KAMBA PODE EXPLICAR TÃO BEM!</div>
+      <h1 class="hero-title">
+        Conectando estudantes aos melhores <span class="accent">explicadores</span> de Angola
+      </h1>
+      <p class="hero-desc">
+        Apoio académico de qualidade, pagamentos seguros dentro da plataforma e acesso rápido ao explicador ideal para a sua disciplina.
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="document.getElementById('explicadores').scrollIntoView({behavior:'smooth'})">
+          🔍 Encontrar Explicador
+        </button>
+        <button class="btn btn-ghost" onclick="openModal('register-tutor-modal')">
+          Tornar-se Explicador
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">10k+</div>
+          <div class="hero-stat-label">Aulas Dadas</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">500+</div>
+          <div class="hero-stat-label">Explicadores</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">4.9 ⭐</div>
+          <div class="hero-stat-label">Avaliação Média</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-images">
+      <div class="hero-img-card">
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=500&fit=crop" alt="Aula online" />
+      </div>
+      <div class="hero-img-card">
+        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=220&fit=crop" alt="Estudante" />
+      </div>
+      <div class="hero-img-card">
+        <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=400&h=160&fit=crop" alt="Educação" />
+      </div>
+      <div class="payment-float">
+        <div class="payment-float-label">Pagamento Concluído</div>
+        <div class="payment-float-amount">25.500 Kz</div>
+        <div class="payment-float-desc">✅ Aula de Matemática reservada para amanhã às 14h00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SEARCH ===================== -->
+<section id="busca">
+  <div class="container">
+    <div class="search-box reveal">
+      <div class="search-box-title">🔍 Encontre o Kamba explicador ideal para si</div>
+      <div class="search-row">
+        <div class="search-field">
+          <label>Disciplina</label>
+          <select id="search-disciplina">
+            <option value="">Todas as Disciplinas</option>
+            <option>Matemática</option><option>Física</option><option>Química</option>
+            <option>Biologia</option><option>Economia</option><option>Contabilidade</option>
+            <option>Gestão</option><option>Direito</option><option>Inglês</option>
+            <option>Português</option><option>Francês</option><option>Informática</option>
+            <option>Programação</option><option>Geografia</option><option>História</option>
+            <option>Filosofia</option><option>Sociologia</option><option>Psicologia</option>
+            <option>Estatística</option><option>Cálculo</option><option>Álgebra</option>
+            <option>Geometria</option><option>Medicina</option><option>Enfermagem</option>
+            <option>Engenharia Civil</option><option>Engenharia Elétrica</option>
+            <option>Arquitetura</option><option>Marketing</option><option>Finanças</option>
+            <option>Empreendedorismo</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label>Nível de Ensino</label>
+          <select id="search-nivel">
+            <option value="">Todos os Níveis</option>
+            <option>Primário</option><option>Secundário</option><option>Universitário</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label>Província</label>
+          <select id="search-provincia">
+            <option value="">Todas as Províncias</option>
+            <option>Luanda</option><option>Benguela</option><option>Huambo</option>
+            <option>Cabinda</option><option>Namibe</option><option>Malanje</option>
+            <option>Lunda Norte</option><option>Lunda Sul</option><option>Uíge</option>
+            <option>Zaire</option><option>Bié</option><option>Moxico</option>
+            <option>Cuando Cubango</option><option>Cunene</option>
+            <option>Kwanza Norte</option><option>Kwanza Sul</option>
+            <option>Bengo</option><option>Huíla</option>
+          </select>
+        </div>
+        <button class="search-btn" onclick="handleSearch()">
+          🔍 Pesquisar
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DISCIPLINES ===================== -->
+<section class="disc-section">
+  <div class="container">
+    <div class="disc-section-header reveal">
+      <span class="section-label">Categorias</span>
+      <h2 class="section-title">Explore por Disciplina</h2>
+      <p class="section-subtitle">As 30 disciplinas com maior procura em Angola</p>
+    </div>
+    <div class="disc-grid reveal" id="disc-grid">
+      <!-- Dynamically generated -->
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TUTORS ===================== -->
+<section id="explicadores">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Profissionais</span>
+      <h2 class="section-title">Explicadores em Destaque</h2>
+      <p class="section-subtitle">Os profissionais mais bem avaliados da nossa comunidade</p>
+      <div class="divider"></div>
+    </div>
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="all" onclick="filterTutors('all', this)">Todos</button>
+      <button class="filter-tab" data-filter="online" onclick="filterTutors('online', this)">🌐 Online</button>
+      <button class="filter-tab" data-filter="presencial" onclick="filterTutors('presencial', this)">📍 Presencial</button>
+    </div>
+    <div class="tutors-grid" id="tutors-grid">
+      <!-- Dynamically generated -->
+    </div>
+    <div style="text-align:center;margin-top:36px">
+      <button class="btn btn-outline" onclick="loadMoreTutors()">Ver Mais Explicadores</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HOW IT WORKS ===================== -->
+<section id="como-funciona">
+  <div class="container">
+    <div class="section-header center reveal" style="margin-bottom:48px">
+      <span class="section-label" style="color:rgba(255,255,255,0.6)">Processo</span>
+      <h2 class="section-title" style="color:#fff">Como funciona a Uniteach Academy?</h2>
+      <p class="section-subtitle" style="color:rgba(255,255,255,0.7);margin:12px auto 0">
+        Do primeiro contacto à aula concluída — tudo dentro da plataforma, de forma segura.
+      </p>
+    </div>
+    <div class="steps-grid reveal">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-title">Encontra</div>
+        <div class="step-desc">Pesquisa por disciplina, localização ou nível de ensino. Filtra por preço, avaliação e modalidade.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-title">Reserva</div>
+        <div class="step-desc">Faz a reserva e o pagamento seguro dentro da plataforma. O explicador é notificado automaticamente.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-title">Comunica</div>
+        <div class="step-desc">Após a reserva, o chat interno é desbloqueado automaticamente para coordenar os detalhes da aula.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-title">Avalia</div>
+        <div class="step-desc">Conclui a aula e avalia o explicador para ajudar a comunidade a fazer melhores escolhas.</div>
+      </div>
+    </div>
+    <div class="payment-info-box reveal">
+      <div class="payment-icon">🔒</div>
+      <div>
+        <div class="payment-info-title">Transações 100% Seguras</div>
+        <div class="payment-info-desc">
+          Todos os pagamentos são processados dentro da plataforma. O explicador recebe o pagamento após a conclusão da aula, garantindo segurança para ambas as partes.
+        </div>
+      </div>
+      <div class="commission-bars">
+        <div class="comm-bar">
+          <div class="comm-pct">15%</div>
+          <div class="comm-label">Taxa de serviço</div>
+        </div>
+        <div class="comm-bar green">
+          <div class="comm-pct">85%</div>
+          <div class="comm-label">Para o explicador</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA ===================== -->
+<section id="cta">
+  <div class="container">
+    <div class="cta-box reveal">
+      <div class="cta-title">Pronto para elevar o seu desempenho académico?</div>
+      <div class="cta-desc" style="color:rgba(255,255,255,0.7)">Junte-se a mais de 10 000 estudantes que já confiam na KAMBA EXPLICA.</div>
+      <div class="cta-actions">
+        <button class="btn btn-primary" onclick="document.getElementById('explicadores').scrollIntoView({behavior:'smooth'})">
+          Começar Agora
+        </button>
+        <a class="btn btn-ghost" href="mailto:kambaexplica@gmail.com">Falar Connosco</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section id="contacto">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Contacto</span>
+      <h2 class="section-title">Contacte-nos</h2>
+      <p class="section-subtitle">Estamos disponíveis para ajudar</p>
+      <div class="divider"></div>
+    </div>
+    <div class="contact-grid reveal">
+      <div>
+        <div class="contact-item">
+          <div class="contact-icon blue">📧</div>
+          <div>
+            <div class="contact-item-title">Email</div>
+            <div class="contact-item-val">
+              <a href="mailto:kambaexplica@gmail.com" style="color:var(--primary-light)">kambaexplica@gmail.com</a>
+            </div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon blue">📞</div>
+          <div>
+            <div class="contact-item-title">Telefone</div>
+            <div class="contact-item-val">
+              <a href="tel:+244939844546">+244 939 844 546</a>
+            </div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon green">💬</div>
+          <div>
+            <div class="contact-item-title">WhatsApp</div>
+            <div class="contact-item-val">
+              <a href="https://wa.me/244939844546" target="_blank" style="color:var(--success)">+244 939 844 546</a>
+            </div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon orange">📍</div>
+          <div>
+            <div class="contact-item-title">Localização</div>
+            <div class="contact-item-val">Luanda, Angola 🇦🇴</div>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="handleContactForm(event)">
+        <div class="form-group">
+          <label>Nome completo</label>
+          <input type="text" id="c-name" placeholder="O seu nome" required />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="c-email" placeholder="email@exemplo.com" required />
+        </div>
+        <div class="form-group">
+          <label>Assunto</label>
+          <select id="c-assunto">
+            <option>Informações gerais</option>
+            <option>Quero ser explicador</option>
+            <option>Problema com pagamento</option>
+            <option>Reclamação</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Mensagem</label>
+          <textarea id="c-msg" rows="4" placeholder="Escreva a sua mensagem..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">
+          Enviar Mensagem ✉️
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <div class="nav-logo-icon">U</div>
+          UNITEACH<span>Academy</span>
+        </div>
+        <div class="footer-desc">A plataforma líder em educação digital em Angola. Pagamentos seguros, explicadores verificados e suporte contínuo.</div>
+        <div style="display:flex;gap:12px">
+          <a href="https://wa.me/244939844546" target="_blank" style="width:36px;height:36px;background:rgba(255,255,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:#fff">💬</a>
+          <a href="mailto:kambaexplica@gmail.com" style="width:36px;height:36px;background:rgba(255,255,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:#fff">📧</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Links Rápidos</div>
+        <div class="footer-links">
+          <a href="#">Início</a>
+          <a href="#explicadores">Explicadores</a>
+          <a href="#como-funciona">Como Funciona</a>
+          <a href="#contacto">Contacto</a>
+          <a href="#" onclick="openModal('login-modal')">Chat Interno</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Contacto</div>
+        <div class="footer-links">
+          <a href="mailto:kambaexplica@gmail.com">kambaexplica@gmail.com</a>
+          <a href="tel:+244939844546">+244 939 844 546</a>
+          <span style="color:rgba(255,255,255,0.4)">Luanda, Angola 🇦🇴</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Uniteach Academy. Orgulhosamente Angolano. 🇦🇴</span>
+      <span>Feito com ❤️ para a educação em Angola</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== MODALS ===================== -->
+
+<!-- LOGIN / REGISTER MODAL -->
+<div class="modal-overlay" id="login-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Aceder à sua conta</div>
+      <div class="modal-close" onclick="closeModal('login-modal')">✕</div>
+    </div>
+    <div class="modal-body">
+      <div class="auth-tabs">
+        <div class="auth-tab active" onclick="switchAuthTab('login')">Entrar</div>
+        <div class="auth-tab" onclick="switchAuthTab('register')">Criar Conta</div>
+      </div>
+      <!-- Login Form -->
+      <div id="auth-login">
+        <div class="form-group" style="margin-bottom:14px">
+          <label>Email</label>
+          <input type="email" placeholder="email@exemplo.com" />
+        </div>
+        <div class="form-group" style="margin-bottom:20px">
+          <label>Password</label>
+          <input type="password" placeholder="A sua password" />
+        </div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:14px" onclick="handleLogin()">
+          Entrar na conta
+        </button>
+        <div style="text-align:right">
+          <span class="modal-link">Esqueceu a password?</span>
+        </div>
+        <div class="form-divider">ou</div>
+        <button class="social-btn">
+          <span>🇦🇴</span> Continuar com conta angolana
+        </button>
+      </div>
+      <!-- Register Form -->
+      <div id="auth-register" style="display:none">
+        <div class="form-group" style="margin-bottom:12px">
+          <label>Nome completo</label>
+          <input type="text" placeholder="O seu nome completo" />
+        </div>
+        <div class="form-group" style="margin-bottom:12px">
+          <label>Email</label>
+          <input type="email" placeholder="email@exemplo.com" />
+        </div>
+        <div class="form-group" style="margin-bottom:12px">
+          <label>Telefone / WhatsApp</label>
+          <input type="tel" placeholder="+244 9XX XXX XXX" />
+        </div>
+        <div class="form-group" style="margin-bottom:12px">
+          <label>Tipo de conta</label>
+          <select>
+            <option>Estudante</option>
+            <option>Explicador</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom:20px">
+          <label>Password</label>
+          <input type="password" placeholder="Crie uma password segura" />
+        </div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="handleRegister()">
+          Criar Conta Grátis
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REGISTER AS TUTOR MODAL -->
+<div class="modal-overlay" id="register-tutor-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">🎓 Tornar-se Explicador</div>
+      <div class="modal-close" onclick="closeModal('register-tutor-modal')">✕</div>
+    </div>
+    <div class="modal-body">
+      <div style="background:var(--bg);border-radius:var(--radius-sm);padding:16px;margin-bottom:20px">
+        <div style="font-weight:700;margin-bottom:6px;color:var(--primary)">Porquê juntar-se à Uniteach?</div>
+        <div style="font-size:0.88rem;color:var(--text-muted);line-height:1.7">
+          ✅ Receba até 85% do valor de cada aula<br>
+          ✅ Pagamentos seguros dentro da plataforma<br>
+          ✅ Alcance estudantes em todo Angola<br>
+          ✅ Defina os seus próprios horários e preços
+        </div>
+      </div>
+      <div class="contact-form">
+        <div class="form-group">
+          <label>Nome completo</label>
+          <input type="text" placeholder="O seu nome completo" />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="email@exemplo.com" />
+        </div>
+        <div class="form-group">
+          <label>Telefone / WhatsApp</label>
+          <input type="tel" placeholder="+244 9XX XXX XXX" />
+        </div>
+        <div class="form-group">
+          <label>Disciplinas que lecciona</label>
+          <select>
+            <option>Matemática</option><option>Física</option><option>Química</option>
+            <option>Biologia</option><option>Economia</option><option>Programação</option>
+            <option>Inglês</option><option>Português</option><option>Outra</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Nível de ensino</label>
+          <select>
+            <option>Primário</option><option>Secundário</option><option>Universitário</option><option>Todos</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Modalidade</label>
+          <select>
+            <option>Online</option><option>Presencial</option><option>Ambas</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Província</label>
+          <select>
+            <option>Luanda</option><option>Benguela</option><option>Huambo</option>
+            <option>Cabinda</option><option>Outra</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="handleTutorRegister()">
+          Submeter Candidatura 🚀
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TUTOR PROFILE MODAL -->
+<div class="modal-overlay" id="profile-modal">
+  <div class="modal" style="max-width:600px">
+    <div class="modal-close" onclick="closeModal('profile-modal')" style="position:absolute;top:16px;right:16px;z-index:10;background:rgba(0,0,0,0.3);border:none;color:#fff">✕</div>
+    <div class="profile-hero" id="profile-hero-content">
+      <!-- Filled by JS -->
+    </div>
+    <div class="profile-section" id="profile-about">
+      <!-- Filled by JS -->
+    </div>
+    <div class="profile-section" id="profile-pricing">
+      <!-- Filled by JS -->
+    </div>
+    <div class="profile-section" id="profile-reviews">
+      <!-- Filled by JS -->
+    </div>
+    <div style="padding:20px 28px">
+      <button class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem;padding:15px" onclick="handleBooking()">
+        Reservar Aula Agora
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING SUCCESS MODAL -->
+<div class="modal-overlay" id="booking-modal">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-body" style="text-align:center;padding:48px 32px">
+      <div style="font-size:4rem;margin-bottom:20px">🎉</div>
+      <div style="font-family:var(--font-head);font-size:1.4rem;font-weight:800;margin-bottom:12px">Aula Reservada!</div>
+      <div style="color:var(--text-muted);font-size:0.92rem;line-height:1.7;margin-bottom:28px">
+        A sua aula foi reservada com sucesso. O explicador foi notificado e o chat está agora desbloqueado.
+      </div>
+      <div style="background:var(--bg);border-radius:12px;padding:18px;margin-bottom:24px;text-align:left">
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px">Total pago</div>
+        <div style="font-family:var(--font-head);font-size:1.6rem;font-weight:800;color:var(--primary)" id="booking-total">25.500 Kz</div>
+        <div style="font-size:0.78rem;color:var(--success);margin-top:4px">✅ Pagamento processado com sucesso</div>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('booking-modal');openChat()">
+        💬 Abrir Chat com Explicador
+      </button>
+      <button onclick="closeModal('booking-modal')" style="margin-top:10px;width:100%;padding:12px;color:var(--text-muted);font-size:0.88rem;background:none;border:none;cursor:pointer">
+        Fechar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD MODAL -->
+<div class="modal-overlay" id="dashboard-modal">
+  <div class="modal" style="max-width:860px">
+    <div class="modal-header">
+      <div class="modal-title">📊 Meu Painel</div>
+      <div class="modal-close" onclick="closeModal('dashboard-modal')">✕</div>
+    </div>
+    <div class="modal-body">
+      <div class="dash-grid">
+        <div class="dash-stat-card">
+          <div class="dash-stat-label">Aulas Marcadas</div>
+          <div class="dash-stat-val">12</div>
+          <div class="dash-stat-sub">+3 esta semana</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-label">Total Gasto</div>
+          <div class="dash-stat-val">186.000 Kz</div>
+          <div class="dash-stat-sub">Este mês</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-label">Explicadores</div>
+          <div class="dash-stat-val">4</div>
+          <div class="dash-stat-sub">Activos</div>
+        </div>
+      </div>
+      <div style="font-family:var(--font-head);font-weight:700;margin-bottom:14px">Aulas Recentes</div>
+      <div style="background:var(--bg);border-radius:10px;overflow:hidden">
+        <table style="width:100%;border-collapse:collapse;font-size:0.88rem">
+          <thead>
+            <tr style="border-bottom:2px solid var(--border)">
+              <th style="padding:12px 16px;text-align:left;color:var(--text-muted);font-weight:600">Explicador</th>
+              <th style="padding:12px 16px;text-align:left;color:var(--text-muted);font-weight:600">Disciplina</th>
+              <th style="padding:12px 16px;text-align:left;color:var(--text-muted);font-weight:600">Data</th>
+              <th style="padding:12px 16px;text-align:left;color:var(--text-muted);font-weight:600">Valor</th>
+              <th style="padding:12px 16px;text-align:left;color:var(--text-muted);font-weight:600">Estado</th>
+            </tr>
+          </thead>
+          <tbody id="dash-table">
+            <tr><td style="padding:12px 16px">Prof. Carlos</td><td style="padding:12px 16px">Matemática</td><td style="padding:12px 16px">28 Abr 2026</td><td style="padding:12px 16px;font-weight:700">25.500 Kz</td><td style="padding:12px 16px"><span class="badge badge-success">Concluída</span></td></tr>
+            <tr style="background:var(--surface)"><td style="padding:12px 16px">Dra. Ana</td><td style="padding:12px 16px">Biologia</td><td style="padding:12px 16px">25 Abr 2026</td><td style="padding:12px 16px;font-weight:700">18.000 Kz</td><td style="padding:12px 16px"><span class="badge badge-success">Concluída</span></td></tr>
+            <tr><td style="padding:12px 16px">Prof. João</td><td style="padding:12px 16px">Física</td><td style="padding:12px 16px">30 Abr 2026</td><td style="padding:12px 16px;font-weight:700">22.000 Kz</td><td style="padding:12px 16px"><span class="badge badge-primary">Agendada</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CHAT PANEL ===================== -->
+<div id="chat-fab" onclick="toggleChat()">
+  💬
+  <div class="badge-count">3</div>
+</div>
+
+<div id="chat-panel">
+  <div class="chat-header">
+    <div>
+      <div class="chat-title">Chat Interno</div>
+      <div style="font-size:0.72rem;color:rgba(255,255,255,0.6)">🔒 Encriptado</div>
+    </div>
+    <div class="chat-close" onclick="toggleChat()">✕</div>
+  </div>
+  <div class="chat-tabs">
+    <div class="chat-tab active" onclick="switchChatView('list',this)">Conversas</div>
+    <div class="chat-tab" onclick="switchChatView('msg',this)">Chat</div>
+  </div>
+  <!-- Conversations List -->
+  <div id="chat-list-view" class="chat-conversations">
+    <div class="chat-conv-item active" onclick="switchChatView('msg',null,'Carlos M.')">
+      <div class="chat-conv-avatar">C</div>
+      <div>
+        <div class="chat-conv-name">Prof. Carlos M.</div>
+        <div class="chat-conv-preview">Até amanhã às 14h00 então!</div>
+      </div>
+    </div>
+    <div class="chat-conv-item" onclick="switchChatView('msg',null,'Ana S.')">
+      <div class="chat-conv-avatar">A</div>
+      <div>
+        <div class="chat-conv-name">Dra. Ana S.</div>
+        <div class="chat-conv-preview">A aula de Biologia foi excelente...</div>
+      </div>
+    </div>
+    <div class="chat-conv-item" onclick="switchChatView('msg',null,'João P.')">
+      <div class="chat-conv-avatar">J</div>
+      <div>
+        <div class="chat-conv-name">Prof. João P.</div>
+        <div class="chat-conv-preview">Vejo-o na sexta!</div>
+      </div>
+    </div>
+  </div>
+  <!-- Messages View -->
+  <div id="chat-msg-view" style="display:none;flex:1;display:none;flex-direction:column">
+    <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;font-weight:600;font-size:0.88rem;background:var(--bg)">
+      <div style="cursor:pointer;color:var(--primary-light)" onclick="switchChatView('list')">← </div>
+      <div class="chat-conv-avatar" style="width:32px;height:32px;font-size:0.8rem">C</div>
+      <span id="chat-with-name">Prof. Carlos M.</span>
+      <span style="font-size:0.72rem;color:var(--success);margin-left:auto">● Online</span>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="msg other">
+        <div class="msg-bubble">Olá! Confirmado para amanhã às 14h00 para a aula de Matemática.</div>
+        <div class="msg-time">14:32</div>
+      </div>
+      <div class="msg me">
+        <div class="msg-bubble">Perfeito, até amanhã Prof. Carlos!</div>
+        <div class="msg-time">14:35</div>
+      </div>
+      <div class="msg other">
+        <div class="msg-bubble">Até amanhã às 14h00 então! Vamos focar em cálculo diferencial.</div>
+        <div class="msg-time">14:36</div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <textarea id="chat-input" placeholder="Escreva uma mensagem..." rows="1" onkeydown="chatKeyDown(event)"></textarea>
+      <div class="chat-send-btn" onclick="sendMessage()">➤</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TOAST CONTAINER ===================== -->
+<div id="toast-container"></div>
+
+<!-- ===================== JAVASCRIPT ===================== -->
+<script>
+  // ===================== DATA =====================
+  const DISCIPLINES = [
+    'Matemática','Física','Química','Biologia','Economia','Contabilidade',
+    'Gestão','Direito','Inglês','Português','Francês','Informática',
+    'Programação','Geografia','História','Filosofia','Sociologia','Psicologia',
+    'Estatística','Cálculo','Álgebra','Geometria','Medicina','Enfermagem',
+    'Eng. Civil','Eng. Elétrica','Arquitetura','Marketing','Finanças','Empreendedorismo'
+  ];
+
+  const DISC_ICONS = {
+    'Matemática':'📐','Física':'⚛️','Química':'🧪','Biologia':'🧬','Economia':'📈',
+    'Contabilidade':'📒','Gestão':'💼','Direito':'⚖️','Inglês':'🇬🇧','Português':'📖',
+    'Francês':'🇫🇷','Informática':'💻','Programação':'👨‍💻','Geografia':'🌍','História':'🏛️',
+    'Filosofia':'🤔','Sociologia':'👥','Psicologia':'🧠','Estatística':'📊','Cálculo':'∫',
+    'Álgebra':'🔢','Geometria':'📐','Medicina':'🏥','Enfermagem':'💉',
+    'Eng. Civil':'🏗️','Eng. Elétrica':'⚡','Arquitetura':'🏠','Marketing':'📣',
+    'Finanças':'💰','Empreendedorismo':'🚀'
+  };
+
+  const TUTORS_DATA = [
+    { id:1, name:'Carlos Menezes', subject:'Matemática & Cálculo', province:'Luanda', mode:'online', rating:4.9, reviews:87, aulas:312, price:25500, levels:['Secundário','Universitário'], avatar:'C', color:'#0A3D6B', bio:'Licenciado em Matemática pela UNILUANDA. 8 anos de experiência em explicações. Especialista em cálculo diferencial e álgebra linear.', priceOptions:[{name:'1 hora',val:25500},{name:'Pacote 4 horas',val:90000},{name:'Pacote 10 horas',val:200000}], reviewsList:[{name:'Sofia A.',date:'Abr 2026',stars:5,text:'Excelente explicador! Consegui compreender cálculo finalmente.'},{name:'Marcos F.',date:'Mar 2026',stars:5,text:'Muito paciente e explica muito bem.'}] },
+    { id:2, name:'Ana Sofia Rodrigues', subject:'Biologia & Medicina', province:'Luanda', mode:'presencial', rating:4.8, reviews:54, aulas:198, price:18000, levels:['Secundário','Universitário'], avatar:'A', color:'#1DAA6C', bio:'Médica e professora universitária. Especialista em Biologia Molecular e preparação para exames de admissão universitária.', priceOptions:[{name:'1 hora',val:18000},{name:'Pacote 4 horas',val:65000},{name:'Pacote 10 horas',val:150000}], reviewsList:[{name:'Pedro N.',date:'Abr 2026',stars:5,text:'Incrível professora! Muito detalhada nas explicações.'},{name:'Carla M.',date:'Mar 2026',stars:4,text:'Muito boa, recomendo para medicina.'}] },
+    { id:3, name:'João Paulo Ferreira', subject:'Física & Engenharia', province:'Benguela', mode:'online', rating:4.7, reviews:43, aulas:156, price:22000, levels:['Secundário','Universitário'], avatar:'J', color:'#FF6B00', bio:'Engenheiro Eletrotécnico formado na UANL. Especialidade em Física Geral e Eletromagnetismo.', priceOptions:[{name:'1 hora',val:22000},{name:'Pacote 4 horas',val:80000},{name:'Pacote 10 horas',val:180000}], reviewsList:[{name:'Bruno T.',date:'Abr 2026',stars:5,text:'Muito bom explicador de Física!'},{name:'Ines S.',date:'Mar 2026',stars:4,text:'Ajudou-me muito a perceber electromagnetismo.'}] },
+    { id:4, name:'Maria Fernanda Lopes', subject:'Inglês & Francês', province:'Luanda', mode:'online', rating:5.0, reviews:126, aulas:489, price:15000, levels:['Primário','Secundário','Universitário'], avatar:'M', color:'#8B5CF6', bio:'Professora de línguas com certificação Cambridge CELTA. Nativa em Francês, fluente em Inglês e Português.', priceOptions:[{name:'1 hora',val:15000},{name:'Pacote 4 horas',val:55000},{name:'Pacote 10 horas',val:120000}], reviewsList:[{name:'Tânia R.',date:'Abr 2026',stars:5,text:'Professora fantástica! O meu inglês melhorou muito.'},{name:'Hugo M.',date:'Mar 2026',stars:5,text:'Excelente metodologia de ensino!'}] },
+    { id:5, name:'Nelson Kavumbi', subject:'Economia & Gestão', province:'Luanda', mode:'presencial', rating:4.6, reviews:38, aulas:142, price:20000, levels:['Secundário','Universitário'], avatar:'N', color:'#0EA5E9', bio:'MBA pela Universidade Católica de Angola. Professor de Economia há 6 anos. Especialidade em macro e microeconomia.', priceOptions:[{name:'1 hora',val:20000},{name:'Pacote 4 horas',val:72000},{name:'Pacote 10 horas',val:170000}], reviewsList:[{name:'Luisa C.',date:'Abr 2026',stars:5,text:'Excelente! Preparei-me muito bem para os exames.'},{name:'Rui A.',date:'Mar 2026',stars:4,text:'Bom professor, explica muito bem.'}] },
+    { id:6, name:'Beatriz Teixeira', subject:'Química & Bioquímica', province:'Huambo', mode:'online', rating:4.8, reviews:61, aulas:231, price:19500, levels:['Secundário','Universitário'], avatar:'B', color:'#EC4899', bio:'Licenciada em Química pela UAN. Especialista em Química Orgânica e preparação para exames universitários.', priceOptions:[{name:'1 hora',val:19500},{name:'Pacote 4 horas',val:70000},{name:'Pacote 10 horas',val:160000}], reviewsList:[{name:'Ana F.',date:'Abr 2026',stars:5,text:'Muito boa professora de química!'},{name:'Diogo S.',date:'Mar 2026',stars:5,text:'Explica de forma muito clara.'}] },
+  ];
+
+  let currentTutor = null;
+  let isLoggedIn = false;
+  let chatOpen = false;
+  let currentFilter = 'all';
+
+  // ===================== INIT =====================
+  window.addEventListener('DOMContentLoaded', () => {
+    renderDiscs();
+    renderTutors(TUTORS_DATA);
+    setupScrollReveal();
+    setupNavScroll();
+    document.querySelectorAll('.modal-overlay').forEach(m => {
+      m.addEventListener('click', e => { if(e.target === m) m.classList.remove('open'); });
+    });
+  });
+
+  // ===================== DISCIPLINES =====================
+  function renderDiscs() {
+    const grid = document.getElementById('disc-grid');
+    grid.innerHTML = DISCIPLINES.map(d => `
+      <div class="tag" onclick="searchByDisc('${d}')">
+        ${DISC_ICONS[d] || '📚'} ${d}
+      </div>
+    `).join('');
+  }
+  function searchByDisc(disc) {
+    document.getElementById('search-disciplina').value = disc;
+    handleSearch();
+    document.getElementById('explicadores').scrollIntoView({behavior:'smooth'});
+  }
+
+  // ===================== TUTORS =====================
+  function renderTutors(data) {
+    const grid = document.getElementById('tutors-grid');
+    if (!data.length) {
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-muted)">Nenhum explicador encontrado para os critérios seleccionados.</div>';
+      return;
+    }
+    grid.innerHTML = data.map(t => `
+      <div class="tutor-card reveal" onclick="openProfile(${t.id})">
+        <div class="tutor-card-img">
+          <div class="tutor-avatar" style="background:linear-gradient(135deg,${t.color},${t.color}CC)">${t.avatar}</div>
+          <div class="tutor-card-mode">${t.mode === 'online' ? '🌐 Online' : '📍 Presencial'}</div>
+        </div>
+        <div class="tutor-card-body">
+          <div class="tutor-card-name">${t.name}</div>
+          <div class="tutor-card-subject">${t.subject}</div>
+          <div class="tutor-card-info">
+            <div class="tutor-rating">
+              <span class="star">⭐</span> ${t.rating} <span style="color:var(--text-muted);font-weight:400">(${t.reviews})</span>
+            </div>
+            <div class="tutor-price">${t.price.toLocaleString()} Kz <span>/hora</span></div>
+          </div>
+          <div class="tutor-tags">
+            ${t.levels.map(l => `<div class="tutor-tag">${l}</div>`).join('')}
+            <div class="tutor-tag">📍 ${t.province}</div>
+            <div class="tutor-tag">📚 ${t.aulas} aulas</div>
+          </div>
+          <div class="tutor-card-footer">
+            <button class="btn btn-outline" onclick="event.stopPropagation();openProfile(${t.id})">Ver Perfil</button>
+            <button class="btn btn-primary" onclick="event.stopPropagation();openProfileAndBook(${t.id})">Reservar</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+    setupScrollReveal();
+  }
+
+  function filterTutors(filter, el) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    if(el) el.classList.add('active');
+    const filtered = filter === 'all' ? TUTORS_DATA : TUTORS_DATA.filter(t => t.mode === filter);
+    renderTutors(filtered);
+  }
+
+  function handleSearch() {
+    const disc = document.getElementById('search-disciplina').value;
+    const nivel = document.getElementById('search-nivel').value;
+    const prov = document.getElementById('search-provincia').value;
+    let results = TUTORS_DATA;
+    if(disc) results = results.filter(t => t.subject.toLowerCase().includes(disc.toLowerCase()));
+    if(nivel) results = results.filter(t => t.levels.includes(nivel));
+    if(prov) results = results.filter(t => t.province === prov);
+    renderTutors(results);
+    document.getElementById('explicadores').scrollIntoView({behavior:'smooth'});
+    if(!results.length) showToast('Nenhum resultado. Tente outros filtros.','info');
+    else showToast(`${results.length} explicador(es) encontrado(s)!`,'success');
+  }
+
+  function loadMoreTutors() {
+    showToast('A carregar mais explicadores...','info');
+    setTimeout(() => showToast('Todos os explicadores foram carregados.','success'), 1200);
+  }
+
+  // ===================== PROFILE MODAL =====================
+  function openProfile(id) {
+    currentTutor = TUTORS_DATA.find(t => t.id === id);
+    if(!currentTutor) return;
+    const t = currentTutor;
+    document.getElementById('profile-hero-content').innerHTML = `
+      <div class="profile-avatar" style="background:linear-gradient(135deg,${t.color},${t.color}CC)">${t.avatar}</div>
+      <div>
+        <div class="profile-name">${t.name}</div>
+        <div class="profile-subject">${t.subject}</div>
+        <div style="font-size:0.82rem;color:rgba(255,255,255,0.65)">📍 ${t.province} · ${t.mode === 'online' ? '🌐 Online' : '📍 Presencial'}</div>
+        <div class="profile-stats-row">
+          <div class="profile-stat">
+            <div class="profile-stat-num">⭐ ${t.rating}</div>
+            <div class="profile-stat-label">${t.reviews} avaliações</div>
+          </div>
+          <div class="profile-stat">
+            <div class="profile-stat-num">${t.aulas}</div>
+            <div class="profile-stat-label">Aulas dadas</div>
+          </div>
+          <div class="profile-stat">
+            <div class="profile-stat-num">${t.price.toLocaleString()} Kz</div>
+            <div class="profile-stat-label">por hora</div>
+          </div>
+        </div>
+      </div>
+    `;
+    document.getElementById('profile-about').innerHTML = `
+      <div class="profile-section-title">Sobre o Explicador</div>
+      <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.7">${t.bio}</p>
+      <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px">
+        ${t.levels.map(l => `<div class="badge badge-primary">${l}</div>`).join('')}
+        ${t.subject.split('&').map(s => `<div class="badge badge-accent">${s.trim()}</div>`).join('')}
+      </div>
+    `;
+    document.getElementById('profile-pricing').innerHTML = `
+      <div class="profile-section-title">Preços</div>
+      ${t.priceOptions.map((p,i) => `
+        <div class="price-option ${i===0?'selected':''}" onclick="selectPrice(this)">
+          <div class="price-option-name">${p.name}</div>
+          <div class="price-option-val">${p.val.toLocaleString()} Kz</div>
+        </div>
+      `).join('')}
+    `;
+    document.getElementById('profile-reviews').innerHTML = `
+      <div class="profile-section-title">Avaliações</div>
+      ${t.reviewsList.map(r => `
+        <div class="review-item">
+          <div class="review-header">
+            <div class="review-avatar">${r.name[0]}</div>
+            <div>
+              <div class="review-name">${r.name}</div>
+              <div class="review-date">${r.date} · ${'⭐'.repeat(r.stars)}</div>
+            </div>
+          </div>
+          <div class="review-text">${r.text}</div>
+        </div>
+      `).join('')}
+    `;
+    openModal('profile-modal');
+  }
+
+  function selectPrice(el) {
+    document.querySelectorAll('.price-option').forEach(p => p.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function openProfileAndBook(id) {
+    openProfile(id);
+    setTimeout(() => {
+      document.querySelector('#profile-modal .modal').scrollTo({top:9999,behavior:'smooth'});
+    }, 300);
+  }
+
+  function handleBooking() {
+    if(!isLoggedIn) {
+      closeModal('profile-modal');
+      openModal('login-modal');
+      showToast('Por favor, inicie sessão para reservar.','info');
+      return;
+    }
+    const selected = document.querySelector('.price-option.selected');
+    const price = selected ? selected.querySelector('.price-option-val').textContent : '25.500 Kz';
+    document.getElementById('booking-total').textContent = price;
+    closeModal('profile-modal');
+    openModal('booking-modal');
+  }
+
+  // ===================== AUTH =====================
+  function switchAuthTab(tab) {
+    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('auth-login').style.display = tab === 'login' ? 'block' : 'none';
+    document.getElementById('auth-register').style.display = tab === 'register' ? 'block' : 'none';
+  }
+
+  function handleLogin() {
+    isLoggedIn = true;
+    closeModal('login-modal');
+    showToast('Bem-vindo de volta! ✅','success');
+    updateNavForLoggedIn();
+  }
+
+  function handleRegister() {
+    isLoggedIn = true;
+    closeModal('login-modal');
+    showToast('Conta criada com sucesso! ✅','success');
+    updateNavForLoggedIn();
+  }
+
+  function handleTutorRegister() {
+    closeModal('register-tutor-modal');
+    showToast('Candidatura submetida! Entraremos em contacto em breve. 🎓','success');
+  }
+
+  function updateNavForLoggedIn() {
+    const actions = document.querySelector('.nav-actions');
+    actions.innerHTML = `
+      <button class="nav-login-btn" onclick="openModal('dashboard-modal')">📊 Meu Painel</button>
+      <button class="nav-login-btn" style="color:var(--danger);border-color:var(--danger)" onclick="handleLogout()">Sair</button>
+      <a class="nav-wa-btn btn" href="https://wa.me/244939844546" target="_blank"><span>💬</span> WhatsApp</a>
+    `;
+  }
+
+  function handleLogout() {
+    isLoggedIn = false;
+    location.reload();
+  }
+
+  // ===================== CONTACT FORM =====================
+  function handleContactForm(e) {
+    e.preventDefault();
+    showToast('Mensagem enviada com sucesso! ✉️','success');
+    e.target.reset();
+  }
+
+  // ===================== CHAT =====================
+  function toggleChat() {
+    chatOpen = !chatOpen;
+    const panel = document.getElementById('chat-panel');
+    panel.classList.toggle('open', chatOpen);
+    if(chatOpen) {
+      document.querySelector('#chat-fab .badge-count').style.display = 'none';
+    }
+  }
+
+  function openChat() {
+    chatOpen = true;
+    document.getElementById('chat-panel').classList.add('open');
+  }
+
+  function switchChatView(view, el, name) {
+    const listV = document.getElementById('chat-list-view');
+    const msgV = document.getElementById('chat-msg-view');
+    if(view === 'list') {
+      listV.style.display = 'block';
+      msgV.style.display = 'none';
+      document.querySelectorAll('.chat-tab').forEach((t,i)=>t.classList.toggle('active',i===0));
+    } else {
+      listV.style.display = 'none';
+      msgV.style.display = 'flex';
+      msgV.style.flexDirection = 'column';
+      document.querySelectorAll('.chat-tab').forEach((t,i)=>t.classList.toggle('active',i===1));
+      if(name) document.getElementById('chat-with-name').textContent = name;
+    }
+  }
+
+  function chatKeyDown(e) {
+    if(e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  }
+
+  function sendMessage() {
+    const inp = document.getElementById('chat-input');
+    const text = inp.value.trim();
+    if(!text) return;
+    const msgs = document.getElementById('chat-messages');
+    const now = new Date();
+    const time = now.getHours()+':'+String(now.getMinutes()).padStart(2,'0');
+    msgs.innerHTML += `
+      <div class="msg me">
+        <div class="msg-bubble">${escapeHtml(text)}</div>
+        <div class="msg-time">${time}</div>
+      </div>
+    `;
+    inp.value = '';
+    msgs.scrollTop = msgs.scrollHeight;
+    setTimeout(() => {
+      msgs.innerHTML += `
+        <div class="msg other">
+          <div class="msg-bubble">Obrigado pela sua mensagem! Responderei em breve.</div>
+          <div class="msg-time">${time}</div>
+        </div>
+      `;
+      msgs.scrollTop = msgs.scrollHeight;
+    }, 1200);
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // ===================== MODALS =====================
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ===================== TOAST =====================
+  function showToast(msg, type = 'success') {
+    const c = document.getElementById('toast-container');
+    const t = document.createElement('div');
+    t.className = `toast ${type}`;
+    t.innerHTML = `<span>${type==='success'?'✅':type==='error'?'❌':'ℹ️'}</span> ${msg}`;
+    c.appendChild(t);
+    setTimeout(() => t.remove(), 3100);
+  }
+
+  // ===================== SCROLL =====================
+  function setupScrollReveal() {
+    const els = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    els.forEach(el => obs.observe(el));
+  }
+
+  function setupNavScroll() {
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+  }
+
+  // ===================== MOBILE MENU =====================
+  function toggleMobile() {
+    document.getElementById('mobile-menu').classList.toggle('open');
+  }
+</script>
+</body>
+</html>
